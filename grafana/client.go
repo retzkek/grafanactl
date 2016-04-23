@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+
+	log "github.com/Sirupsen/logrus"
 )
 
 type Client struct {
@@ -47,9 +49,14 @@ func (c *Client) newRequest(method, path string, body io.Reader) (*http.Request,
 		req.Header.Add("Authorization", c.key)
 	}
 	if body == nil {
-		fmt.Println("request to ", url.String(), "with no body data")
+		log.WithFields(log.Fields{
+			"url": url.String(),
+		}).Debug("request")
 	} else {
-		fmt.Println("request to ", url.String(), "with body data", body.(*bytes.Buffer).String())
+		log.WithFields(log.Fields{
+			"url":  url.String(),
+			"body": body.(*bytes.Buffer).String(),
+		}).Debug("request")
 	}
 	req.Header.Add("Content-Type", "application/json")
 	return req, err
