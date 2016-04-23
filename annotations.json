@@ -1,0 +1,298 @@
+{
+	"annotations": {
+		"enable": true,
+		"list": [
+			{
+				"datasource": "graphite",
+				"enable": false,
+				"iconColor": "rgb(240, 104, 0)",
+				"iconSize": 13,
+				"lineColor": "rgba(253, 54, 54, 0.77)",
+				"name": "deploys",
+				"showLine": true,
+				"target": "alias(summarize(carbon.agents.*.pointsPerUpdate, '1h', 'sum', false), 'deploy')",
+				"type": "graphite metric"
+			},
+			{
+				"datasource": "graphite",
+				"enable": false,
+				"iconColor": "rgb(1, 157, 203)",
+				"iconSize": 13,
+				"lineColor": "rgba(255, 96, 96, 0.592157)",
+				"name": "puppet apply",
+				"showLine": true,
+				"target": "alias(apps.fakesite.web_server_02.counters.request_status.code_403.count,'puppet apply')",
+				"type": "graphite metric"
+			},
+			{
+				"datasource": "ES Logs",
+				"enable": true,
+				"iconColor": "rgba(255, 96, 96, 1)",
+				"name": "logs",
+				"tagsField": "tags",
+				"textField": "description",
+				"titleField": "@message"
+			}
+		]
+	},
+	"editable": true,
+	"hideControls": false,
+	"id": 10,
+	"links": [],
+	"originalTitle": "Annotations",
+	"refresh": false,
+	"rows": [
+		{
+			"collapsable": true,
+			"collapse": false,
+			"editable": true,
+			"height": "250px",
+			"notice": false,
+			"panels": [
+				{
+					"aliasColors": {},
+					"annotate": {
+						"enable": false
+					},
+					"bars": false,
+					"datasource": null,
+					"editable": true,
+					"fill": 0,
+					"grid": {
+						"max": null,
+						"min": 0,
+						"threshold1": null,
+						"threshold1Color": "rgba(216, 200, 27, 0.27)",
+						"threshold2": null,
+						"threshold2Color": "rgba(234, 112, 112, 0.22)"
+					},
+					"id": 1,
+					"interactive": true,
+					"legend": {
+						"avg": false,
+						"current": false,
+						"max": false,
+						"min": false,
+						"show": true,
+						"total": false,
+						"values": false
+					},
+					"legend_counts": true,
+					"lines": true,
+					"linewidth": 1,
+					"nullPointMode": "connected",
+					"options": false,
+					"percentage": false,
+					"pointradius": 5,
+					"points": false,
+					"renderer": "flot",
+					"resolution": 100,
+					"scale": 1,
+					"seriesOverrides": [],
+					"span": 12,
+					"spyable": true,
+					"stack": true,
+					"steppedLine": false,
+					"targets": [
+						{
+							"refId": "A",
+							"target": "aliasByNode(apps.fakesite.web_server_02.counters.requests.count,2)"
+						},
+						{
+							"refId": "B",
+							"target": "aliasByNode(apps.fakesite.web_server_01.counters.requests.count,2)"
+						}
+					],
+					"timeFrom": null,
+					"timeShift": null,
+					"timezone": "browser",
+					"title": "Annotations example",
+					"tooltip": {
+						"msResolution": false,
+						"query_as_alias": true,
+						"shared": false,
+						"value_type": "cumulative"
+					},
+					"type": "graph",
+					"xaxis": {
+						"show": true
+					},
+					"yaxes": [
+						{
+							"format": "short",
+							"logBase": 1,
+							"max": null,
+							"min": null,
+							"show": true
+						},
+						{
+							"format": "short",
+							"logBase": 1,
+							"max": null,
+							"min": null,
+							"show": true
+						}
+					],
+					"zerofill": true
+				}
+			],
+			"title": "Welcome to Grafana"
+		},
+		{
+			"collapsable": true,
+			"collapse": false,
+			"editable": true,
+			"height": "350px",
+			"notice": false,
+			"panels": [
+				{
+					"aliasColors": {
+						"web_server_01": "#1F78C1",
+						"web_server_02": "#6ED0E0"
+					},
+					"annotate": {
+						"enable": false
+					},
+					"bars": false,
+					"datasource": null,
+					"editable": true,
+					"fill": 1,
+					"grid": {
+						"max": null,
+						"min": 0,
+						"threshold1": null,
+						"threshold1Color": "rgba(216, 200, 27, 0.27)",
+						"threshold2": null,
+						"threshold2Color": "rgba(234, 112, 112, 0.22)"
+					},
+					"id": 2,
+					"interactive": true,
+					"legend": {
+						"avg": false,
+						"current": false,
+						"max": false,
+						"min": false,
+						"show": true,
+						"total": false,
+						"values": false
+					},
+					"legend_counts": true,
+					"lines": true,
+					"linewidth": 1,
+					"nullPointMode": "connected",
+					"options": false,
+					"percentage": false,
+					"pointradius": 5,
+					"points": false,
+					"renderer": "flot",
+					"resolution": 100,
+					"scale": 1,
+					"seriesOverrides": [],
+					"span": 6,
+					"spyable": true,
+					"stack": true,
+					"steppedLine": false,
+					"targets": [
+						{
+							"refId": "A",
+							"target": "aliasByNode(apps.fakesite.web_server_02.counters.request_status.code_304.count,5)"
+						}
+					],
+					"timeFrom": null,
+					"timeShift": null,
+					"timezone": "browser",
+					"title": "Annotations example",
+					"tooltip": {
+						"msResolution": false,
+						"query_as_alias": true,
+						"shared": false,
+						"value_type": "cumulative"
+					},
+					"type": "graph",
+					"xaxis": {
+						"show": true
+					},
+					"yaxes": [
+						{
+							"format": "short",
+							"logBase": 1,
+							"max": null,
+							"min": null,
+							"show": true
+						},
+						{
+							"format": "short",
+							"logBase": 1,
+							"max": null,
+							"min": null,
+							"show": true
+						}
+					],
+					"zerofill": true
+				},
+				{
+					"content": "### Annotations\n\n- Annotation is a feature that must be enabled in the dashboards settings / Controls tab / Feature toggles\n- Annotation bar is then visible at the top. \n- Click on the cog to open the Annotations dialog \n- In this dialog you can add or edit annotations \n- Currently only Graphite metrics and Graphite events are supported sources of annotations\n- More datasource options for annotations will be added \n- Click on the annotation name in the bar to toggle the annotation on or off\n\n",
+					"editable": true,
+					"error": false,
+					"id": 3,
+					"loadingEditor": false,
+					"mode": "markdown",
+					"span": 6,
+					"style": {},
+					"title": "Description",
+					"type": "text"
+				}
+			],
+			"title": "test"
+		}
+	],
+	"schemaVersion": 12,
+	"sharedCrosshair": false,
+	"style": "dark",
+	"tags": [
+		"annotations",
+		"demo"
+	],
+	"templating": {
+		"enable": false,
+		"list": []
+	},
+	"time": {
+		"from": "now-30m",
+		"to": "now"
+	},
+	"timepicker": {
+		"collapse": false,
+		"enable": true,
+		"notice": false,
+		"now": true,
+		"refresh_intervals": [
+			"5s",
+			"10s",
+			"30s",
+			"1m",
+			"5m",
+			"15m",
+			"30m",
+			"1h",
+			"2h",
+			"1d"
+		],
+		"status": "Stable",
+		"time_options": [
+			"5m",
+			"15m",
+			"1h",
+			"6h",
+			"12h",
+			"24h",
+			"2d",
+			"7d",
+			"30d"
+		],
+		"type": "timepicker"
+	},
+	"timezone": "browser",
+	"title": "Annotations",
+	"version": 6
+}
