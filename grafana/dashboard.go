@@ -24,6 +24,34 @@ type Dashboard struct {
 	Model map[string]interface{} `json:"dashboard"`
 }
 
+type DashboardList []DashboardEntry
+
+type DashboardEntry struct {
+	Id        int      `json:"id"`
+	Title     string   `json:"title"`
+	URI       string   `json:"uri"`
+	Type      string   `json:"type"`
+	Tags      []string `json:"tags"`
+	IsStarred bool     `json:"isStarred"`
+}
+
+func (c *Client) ListDashboards() (*DashboardList, error) {
+	req, err := c.newRequest("GET", "/api/search", nil)
+	if err != nil {
+		return nil, err
+	}
+	d, err := c.DoRead(req)
+	if err != nil {
+		return nil, err
+	}
+
+	var dl DashboardList
+	if err = json.Unmarshal(d, &dl); err != nil {
+		return nil, err
+	}
+	return &dl, nil
+}
+
 func (c *Client) SaveDashboard(model map[string]interface{}, overwrite bool) (*DashboardSaveResponse, error) {
 	wrapper := map[string]interface{}{
 		"dashboard": model,

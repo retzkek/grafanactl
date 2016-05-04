@@ -2,8 +2,10 @@ package gapi
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -60,4 +62,20 @@ func (c *Client) newRequest(method, path string, body io.Reader) (*http.Request,
 	}
 	req.Header.Add("Content-Type", "application/json")
 	return req, err
+}
+
+func (c *Client) DoRead(req *http.Request) ([]byte, error) {
+	resp, err := c.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode != 200 {
+		return nil, errors.New(resp.Status)
+	}
+
+	data, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
 }
