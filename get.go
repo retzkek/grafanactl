@@ -19,7 +19,7 @@ If no dashboards are specified, retrieve all available dashboards.`,
 }
 
 var (
-	path = getCmd.Flag.String("path", "",
+	path = getCmd.Flag.String("path", ".",
 		"path to save file in (default is current working dir)")
 )
 
