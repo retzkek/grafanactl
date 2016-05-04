@@ -24,10 +24,21 @@ var (
 )
 
 func getFunc(client *gapi.Client, cmd *Command, args []string) error {
+	var dashboards []string
 	if len(args) == 0 {
-		return fmt.Errorf("Get all not implemented.")
+		dashboards = make([]string, 0)
+		dl, err := client.ListDashboards()
+		if err != nil {
+			log.Error(err)
+			return fmt.Errorf("error getting dashboard list")
+		}
+		for _, d := range *dl {
+			dashboards = append(dashboards, d.URI)
+		}
+	} else {
+		dashboards = args
 	}
-	for _, d := range args {
+	for _, d := range dashboards {
 		dash, err := client.Dashboard(d)
 		if err != nil {
 			log.WithField("dashboard", d).Error(err)
