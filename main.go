@@ -8,10 +8,14 @@ import (
 	gapi "github.com/retzkek/go-grafana-api"
 )
 
+const (
+	DEFAULT_URL = "http://play.grafana.org"
+)
+
 var (
 	verbose = flag.Bool("v", false,
 		"turn on verbose output")
-	url = flag.String("url", "http://play.grafana.org",
+	url = flag.String("url", DEFAULT_URL,
 		"Grafana base URL (or set GRAFANA_URL)")
 	key = flag.String("key", "",
 		"Grafana API key (or set GRAFANA_API_KEY)")
@@ -36,7 +40,7 @@ func main() {
 	args := flag.Args()
 
 	// check environment variables
-	if *url == "" {
+	if *url == DEFAULT_URL {
 		if env := os.Getenv("GRAFANA_URL"); env != "" {
 			flag.Set("url", env)
 		}
