@@ -14,9 +14,9 @@ var helpCmd = &Command{
 	Name:    "help",
 	Usage:   "[COMMAND]",
 	Summary: "Print command usage and options.",
-	Help: `grafctl uses the Grafana API to manage dashboards.
+	Help: `grafanactl uses the Grafana API to manage dashboards.
 General Usage:
-	grafctl [OPTIONS] COMMAND [COMMAND OPTIONS]`,
+	grafanactl [OPTIONS] COMMAND [COMMAND OPTIONS]`,
 }
 
 func helpFunc(client *gapi.Client, cmd *Command, args []string) error {
@@ -109,13 +109,13 @@ var optionHelpTemplate = `
 		{{.Usage}}`
 
 var generalHelpTemplate = `
-grafctl
+grafanactl
 
 SYNOPSIS
-	grafctl is a backup/restore utility for Grafana dashboards.
+	grafanactl is a backup/restore utility for Grafana dashboards.
 
 USAGE
-	grafctl [OPTIONS] COMMAND [COMMAND OPTIONS]
+	grafanactl [OPTIONS] COMMAND [COMMAND OPTIONS]
 
 OPTIONS
 {{appFlags}}
@@ -128,7 +128,7 @@ COMMANDS
 `
 
 var commandHelpTemplate = `
-grafctl
+grafanactl
 
 {{.Name}}
 

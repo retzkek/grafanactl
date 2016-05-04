@@ -12,7 +12,7 @@ import (
 
 var getCmd = &Command{
 	Name:    "get",
-	Usage:   "[OPTIONS] [[[DASHBOARD1] DASHBOARD2] ...]",
+	Usage:   "[OPTIONS] [DASHBOARD...]",
 	Summary: "Retrieve dashboards and save to file.",
 	Help: `The get command retrieves dashboards and saves them to file.
 If no dashboards are specified, retrieve all available dashboards.`,
