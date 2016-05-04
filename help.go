@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"flag"
+	"fmt"
 	"os"
 	"text/template"
 
@@ -20,6 +21,7 @@ General Usage:
 }
 
 func helpFunc(client *gapi.Client, cmd *Command, args []string) error {
+	fmt.Printf("grafanactl v%s (%s/%s)\n\n", VERSION, REF, BUILD)
 	switch {
 	case cmd == nil, cmd == helpCmd && len(args) != 1:
 		// no comand, just help command, or extra junk
@@ -109,8 +111,6 @@ var optionHelpTemplate = `
 		{{.Usage}}`
 
 var generalHelpTemplate = `
-grafanactl
-
 SYNOPSIS
 	grafanactl is a backup/restore utility for Grafana dashboards.
 
@@ -128,8 +128,6 @@ COMMANDS
 `
 
 var commandHelpTemplate = `
-grafanactl
-
 {{.Name}}
 
 SYNOPSIS

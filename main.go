@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"os"
 
 	log "github.com/Sirupsen/logrus"
@@ -45,8 +44,6 @@ func findCommand(cmdName string) *Command {
 }
 
 func main() {
-	fmt.Printf("grafanactl v%s (%s/%s)\n", VERSION, REF, BUILD)
-
 	flag.Parse()
 	args := flag.Args()
 
