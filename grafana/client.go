@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"path"
 	"strings"
 
 	log "github.com/Sirupsen/logrus"
@@ -40,9 +41,9 @@ func New(auth, baseURL string) (*Client, error) {
 	}, nil
 }
 
-func (c *Client) newRequest(method, path string, body io.Reader) (*http.Request, error) {
+func (c *Client) newRequest(method, uri string, body io.Reader) (*http.Request, error) {
 	url := c.baseURL
-	url.Path = path
+	url.Path = path.Join(url.Path, uri)
 	req, err := http.NewRequest(method, url.String(), body)
 	if err != nil {
 		return req, err
