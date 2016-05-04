@@ -14,7 +14,7 @@ const (
 
 // build-time vars
 var (
-	VERSION = "0.1.1"
+	VERSION = "0.1.2"
 	REF     = "scratch"
 	BUILD   = ""
 )
@@ -32,6 +32,7 @@ var (
 var commands = []*Command{
 	getCmd,
 	helpCmd,
+	listCmd,
 }
 
 func findCommand(cmdName string) *Command {
