@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"os"
 
 	log "github.com/Sirupsen/logrus"
@@ -12,6 +13,14 @@ const (
 	DEFAULT_URL = "http://play.grafana.org"
 )
 
+// build-time vars
+var (
+	VERSION = "0.1.1"
+	REF     = "scratch"
+	BUILD   = ""
+)
+
+// run-time flags
 var (
 	verbose = flag.Bool("v", false,
 		"turn on verbose output")
@@ -36,6 +45,8 @@ func findCommand(cmdName string) *Command {
 }
 
 func main() {
+	fmt.Printf("grafanactl v%s (%s/%s)\n", VERSION, REF, BUILD)
+
 	flag.Parse()
 	args := flag.Args()
 
