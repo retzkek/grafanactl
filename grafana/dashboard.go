@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"path"
 )
 
 type DashboardMeta struct {
@@ -84,9 +85,16 @@ func (c *Client) SaveDashboard(model map[string]interface{}, overwrite bool) (*D
 	return result, err
 }
 
-func (c *Client) Dashboard(slug string) (*Dashboard, error) {
-	path := fmt.Sprintf("/api/dashboards/db/%s", slug)
-	req, err := c.newRequest("GET", path, nil)
+// Dashboard fetches the dashboard with the given uri,
+// and unmarshals it into a Dashboard structure.
+// If uri does not contain a path then "db/" is prepended.
+func (c *Client) Dashboard(uri string) (*Dashboard, error) {
+	if path.Dir(uri) == "." {
+		uri = path.Join("db", uri)
+	}
+	uri = path.Join("/api/dashboards", uri)
+
+	req, err := c.newRequest("GET", uri, nil)
 	if err != nil {
 		return nil, err
 	}
