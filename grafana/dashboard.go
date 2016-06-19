@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"path"
+
+	log "github.com/Sirupsen/logrus"
 )
 
 type DashboardMeta struct {
@@ -18,6 +20,7 @@ type DashboardSaveResponse struct {
 	Slug    string `json:"slug"`
 	Status  string `json:"status"`
 	Version int64  `json:"version"`
+	Message string `json:"message"`
 }
 
 type Dashboard struct {
@@ -71,9 +74,6 @@ func (c *Client) SaveDashboard(model map[string]interface{}, overwrite bool) (*D
 	if err != nil {
 		return nil, err
 	}
-	if resp.StatusCode != 200 {
-		return nil, errors.New(resp.Status)
-	}
 
 	data, err = ioutil.ReadAll(resp.Body)
 	if err != nil {
@@ -81,7 +81,21 @@ func (c *Client) SaveDashboard(model map[string]interface{}, overwrite bool) (*D
 	}
 
 	result := &DashboardSaveResponse{}
-	err = json.Unmarshal(data, &result)
+	if err = json.Unmarshal(data, &result); err != nil {
+		return result, err
+	}
+
+	switch resp.StatusCode {
+	case 200:
+		return result, nil
+	case 400, 412:
+		log.Error(resp.Status)
+		return result, errors.New(result.Message)
+	default:
+		log.Error(resp.Status)
+		return result, errors.New(resp.Status)
+	}
+
 	return result, err
 }
 
