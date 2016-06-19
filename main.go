@@ -33,6 +33,7 @@ var commands = []*Command{
 	getCmd,
 	helpCmd,
 	listCmd,
+	pushCmd,
 }
 
 func findCommand(cmdName string) *Command {
