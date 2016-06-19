@@ -134,7 +134,7 @@ SYNOPSIS
 	{{.Summary}}
 
 USAGE
-	{{.Name}} [OPTION]
+	{{.Name}} {{.Usage}}
 
 DESCRIPTION
 	{{.Help}}
