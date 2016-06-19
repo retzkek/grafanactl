@@ -14,7 +14,7 @@ const (
 
 // build-time vars
 var (
-	VERSION = "0.1.2"
+	VERSION = "0.1.3"
 	REF     = "scratch"
 	BUILD   = ""
 )
