@@ -18,11 +18,6 @@ var getCmd = &Command{
 If no dashboards are specified, retrieve all available dashboards.`,
 }
 
-var (
-	path = getCmd.Flag.String("path", ".",
-		"path to save file in (default is current working dir)")
-)
-
 func getFunc(client *gapi.Client, cmd *Command, args []string) error {
 	var dashboards []string
 	if len(args) == 0 {

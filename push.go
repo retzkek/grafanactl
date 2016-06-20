@@ -24,14 +24,12 @@ only dashboards in the 'db' sub-directory are pushed.`,
 }
 
 var (
-	pushPath = pushCmd.Flag.String("path", ".",
-		"path to read files from (default is current working dir)")
-	pushOverwrite = pushCmd.Flag.Bool("overwrite", false,
+	overwrite = pushCmd.Flag.Bool("overwrite", false,
 		"overwrite existing dashboards")
 )
 
 func pushFunc(client *gapi.Client, cmd *Command, args []string) error {
-	dirname := filepath.Join(*pushPath, "db")
+	dirname := filepath.Join(*path, "db")
 	df, err := os.Open(dirname)
 	defer df.Close()
 	if err != nil {
@@ -61,7 +59,7 @@ func pushFunc(client *gapi.Client, cmd *Command, args []string) error {
 			log.WithField("file", filename).Error(err)
 			return fmt.Errorf("error loading dashboard from file")
 		}
-		resp, err := client.SaveDashboard(model, *pushOverwrite)
+		resp, err := client.SaveDashboard(model, *overwrite)
 		// grafana returns 404 if dashboard we're trying to send includes an id,
 		// but no dashboard exists with that db. Try sending dashboard with nil
 		// id (i.e. create new).
@@ -69,7 +67,7 @@ func pushFunc(client *gapi.Client, cmd *Command, args []string) error {
 			if err.Error() == "404 Not Found" {
 				log.Warning("Grafana returned 404. Trying to create new dashboard.")
 				model["id"] = nil
-				resp, err = client.SaveDashboard(model, *pushOverwrite)
+				resp, err = client.SaveDashboard(model, *overwrite)
 			}
 		}
 		if err != nil {
