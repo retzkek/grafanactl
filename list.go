@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	log "github.com/Sirupsen/logrus"
-	gapi "github.com/retzkek/go-grafana-api"
+	"github.com/retzkek/grafanactl/gapi"
 )
 
 var listCmd = &Command{

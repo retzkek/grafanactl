@@ -4,7 +4,7 @@ import (
 	"flag"
 
 	log "github.com/Sirupsen/logrus"
-	gapi "github.com/retzkek/go-grafana-api"
+	"github.com/retzkek/grafanactl/gapi"
 )
 
 // Command represents a sub-command.

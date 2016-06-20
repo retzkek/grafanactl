@@ -90,7 +90,7 @@ func (c *Client) SaveDashboard(model map[string]interface{}, overwrite bool) (*D
 		return result, nil
 	case 400, 412:
 		log.Error(resp.Status)
-		return result, errors.New(result.Message)
+		return result, ApiError{resp.StatusCode, resp.Status, result.Message}
 	default:
 		log.Error(resp.Status)
 		return result, errors.New(resp.Status)
@@ -143,7 +143,7 @@ func (c *Client) DeleteDashboard(slug string) error {
 		return err
 	}
 	if resp.StatusCode != 200 {
-		return errors.New(resp.Status)
+		return ApiError{resp.StatusCode, resp.Status, resp.Status}
 	}
 
 	return nil

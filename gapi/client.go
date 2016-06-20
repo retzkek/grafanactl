@@ -14,6 +14,19 @@ import (
 	log "github.com/Sirupsen/logrus"
 )
 
+type ApiError struct {
+	ResponseCode   int
+	ResponseStatus string
+	Message        string
+}
+
+func (e ApiError) Error() string {
+	if e.Message != "" {
+		return e.Message
+	}
+	return e.ResponseStatus
+}
+
 type Client struct {
 	key     string
 	baseURL url.URL

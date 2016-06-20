@@ -8,7 +8,7 @@ import (
 	"text/template"
 
 	log "github.com/Sirupsen/logrus"
-	gapi "github.com/retzkek/go-grafana-api"
+	"github.com/retzkek/grafanactl/gapi"
 )
 
 var helpCmd = &Command{
