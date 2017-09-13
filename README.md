@@ -9,6 +9,8 @@ USAGE
 
 OPTIONS
 
+	-headers=[]
+		Comma-separated list of extra headers to pass, e.g. "X-User:foo,X-Grafana-Org-Id:1" (or set GRAFANA_HEADERS)
     -key=[]
         Grafana API key (or set GRAFANA_API_KEY)
     -path=[.]

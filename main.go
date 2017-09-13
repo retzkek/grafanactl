@@ -15,7 +15,7 @@ const (
 
 // build-time vars
 var (
-	VERSION = "0.1.4"
+	VERSION = "0.1.5"
 	REF     = "scratch"
 	BUILD   = ""
 )
@@ -30,6 +30,8 @@ var (
 		"Grafana API key (or set GRAFANA_API_KEY)")
 	path = flag.String("path", DEFAULT_PATH,
 		"path to local dashboard repository (or set GRAFANA_PATH)")
+	headers = flag.String("headers", "",
+		"Comma-separated list of extra headers to pass, e.g. \"X-User:foo,X-Grafana-Org-Id:1\" (or set GRAFANA_HEADERS)")
 )
 
 var commands = []*Command{
@@ -66,7 +68,7 @@ func main() {
 		log.SetLevel(log.InfoLevel)
 	}
 	// setup client
-	client, err := gapi.New(*key, *url)
+	client, err := gapi.New(*key, *headers, *url)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -88,6 +90,11 @@ func getenv() {
 	if *key == "" {
 		if env := os.Getenv("GRAFANA_API_KEY"); env != "" {
 			flag.Set("key", env)
+		}
+	}
+	if *headers == "" {
+		if env := os.Getenv("GRAFANA_HEADERS"); env != "" {
+			flag.Set("headers", env)
 		}
 	}
 	if *path == DEFAULT_PATH {

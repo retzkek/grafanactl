@@ -29,13 +29,16 @@ func (e ApiError) Error() string {
 
 type Client struct {
 	key     string
+	headers map[string]string
 	baseURL url.URL
 	*http.Client
 }
 
 //New creates a new grafana client
 //auth can be in user:pass format, or it can be an api key
-func New(auth, baseURL string) (*Client, error) {
+//headers should be a comma-separated list of extra headers to send with each
+//request, e.g. "X-User:foo,X-Grafana-Org-Id:1"
+func New(auth, headers, baseURL string) (*Client, error) {
 	u, err := url.Parse(baseURL)
 	if err != nil {
 		return nil, err
@@ -47,10 +50,19 @@ func New(auth, baseURL string) (*Client, error) {
 	} else if auth != "" {
 		key = fmt.Sprintf("Bearer %s", auth)
 	}
+	hdr := make(map[string]string)
+	if headers != "" {
+		split := strings.Split(headers, ",")
+		for _, header := range split {
+			kv := strings.Split(header, ":")
+			hdr[kv[0]] = kv[1]
+		}
+	}
 	return &Client{
-		key,
-		*u,
-		&http.Client{},
+		key:     key,
+		headers: hdr,
+		baseURL: *u,
+		Client:  &http.Client{},
 	}, nil
 }
 
@@ -75,6 +87,9 @@ func (c *Client) newRequest(method, uri string, body io.Reader) (*http.Request, 
 		}).Debug("request")
 	}
 	req.Header.Add("Content-Type", "application/json")
+	for k, v := range c.headers {
+		req.Header.Add(k, v)
+	}
 	return req, err
 }
 
